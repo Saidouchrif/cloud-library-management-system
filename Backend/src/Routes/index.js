@@ -2,9 +2,12 @@ const express = require("express");
 const router = express.Router();
 
 // Import des routes
-const utilisateurRoutes = require("./UtilisateurRoutes.js");
+const authRoutes = require("./authRoutes.js");
+const utilisateurRoutes = require("./utilisateurRoutes.js");
 
+// Utilisation des routes
+router.use("/utilisateur", utilisateurRoutes);
+
+router.use("/auth", authRoutes);
 // Centralisation
-router.use("/utilisateurs", utilisateurRoutes);
-
 module.exports = router;
