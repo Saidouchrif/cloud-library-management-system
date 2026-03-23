@@ -5,9 +5,13 @@ const router = express.Router();
 const authRoutes = require("./authRoutes.js");
 const utilisateurRoutes = require("./utilisateurRoutes.js");
 const categorieRoutes = require("./categorieRoutes.js");
-// Utilisation des routes
+const livreRoutes = require("./livreRoutes");
+
+
+router.use("/auth", authRoutes);
 router.use("/utilisateurs", utilisateurRoutes);
 router.use("/categories", categorieRoutes);
-router.use("/auth", authRoutes);
+router.use("/livres", livreRoutes);
+
 // Centralisation
 module.exports = router;
