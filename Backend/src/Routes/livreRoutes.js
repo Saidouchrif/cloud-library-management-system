@@ -8,10 +8,10 @@ const {
   updateLivre,
   deleteLivre,
   toggleLivre,
-} = require("../Controllers/livreController.js");
+} = require("../controllers/livreController.js");
 
-const { protect } = require("../middlewares/authMiddleware");
-const { authorizeRoles } = require("../middlewares/roleMiddleware");
+const { protect } = require("../middlewares/authMiddleware.js");
+const { authorizeRoles } = require("../middlewares/roleMiddleware.js");
 
 // GET
 router.get("/", protect, getLivres);

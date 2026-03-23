@@ -1,4 +1,4 @@
-const Livre = require("../Models/livre.js");
+const Livre = require("../models/livre.js");
 const Categorie = require("../models/categorie.js");
 
 // CREATE
