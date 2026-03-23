@@ -1,36 +1,10 @@
-const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
-const routes = require("./routes");
+const app = require("./app");
 
 dotenv.config();
 
-const app = express();
-
-// Middleware pour parser le JSON
-app.use(express.json());
-
-// Utilisation des routes
-app.use("/api", routes);
-
-// Route de test principale
-app.get("/", (req, res) => {
-  res.send("API Bibliothèque fonctionne 🚀");
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
- //Fonction pour démarrer le serveur uniquement si la DB est connectée
+// Start server
 const startServer = async () => {
   try {
     await connectDB();
@@ -45,5 +19,4 @@ const startServer = async () => {
   }
 };
 
-// Lancer le serveur
 startServer();
