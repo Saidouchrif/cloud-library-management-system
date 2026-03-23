@@ -1,10 +1,10 @@
-const request = require("supertest");
+﻿const request = require("supertest");
 
 process.env.JWT_SECRET = process.env.JWT_SECRET || "test-jwt-secret";
 process.env.JWT_REFRESH_SECRET =
   process.env.JWT_REFRESH_SECRET || "test-jwt-refresh-secret";
 
-jest.mock("../Models/Utilisateur.js", () => {
+jest.mock("../models/utilisateur.js", () => {
   const bcrypt = require("bcryptjs");
 
   const users = [
@@ -49,7 +49,7 @@ jest.mock("../Models/Utilisateur.js", () => {
   };
 });
 
-jest.mock("../Models/categorie.js", () => {
+jest.mock("../models/categorie.js", () => {
   const seed = [
     {
       _id: "c1",
@@ -129,7 +129,7 @@ jest.mock("../Models/categorie.js", () => {
 });
 
 const app = require("../app");
-const Categorie = require("../Models/categorie.js");
+const Categorie = require("../models/categorie.js");
 
 let adminToken;
 let membreToken;
@@ -316,3 +316,4 @@ describe("Categorie routes", () => {
     expect(res.statusCode).toBe(500);
   });
 });
+

@@ -1,10 +1,10 @@
-const request = require("supertest");
+﻿const request = require("supertest");
 
 process.env.JWT_SECRET = process.env.JWT_SECRET || "test-jwt-secret";
 process.env.JWT_REFRESH_SECRET =
   process.env.JWT_REFRESH_SECRET || "test-jwt-refresh-secret";
 
-jest.mock("../Models/Utilisateur.js", () => {
+jest.mock("../models/utilisateur.js", () => {
   const bcrypt = require("bcryptjs");
 
   const users = [
@@ -49,7 +49,7 @@ jest.mock("../Models/Utilisateur.js", () => {
   };
 });
 
-jest.mock("../Models/categorie.js", () => {
+jest.mock("../models/categorie.js", () => {
   const seed = [
     {
       _id: "cat1",
@@ -82,7 +82,7 @@ jest.mock("../Models/categorie.js", () => {
   };
 });
 
-jest.mock("../Models/livre.js", () => {
+jest.mock("../models/livre.js", () => {
   const categories = [
     { _id: "cat1", nom: "Informatique", isActive: true },
     { _id: "cat2", nom: "Histoire", isActive: true },
@@ -231,8 +231,8 @@ jest.mock("../Models/livre.js", () => {
 });
 
 const app = require("../app");
-const Livre = require("../Models/livre.js");
-const Categorie = require("../Models/categorie.js");
+const Livre = require("../models/livre.js");
+const Categorie = require("../models/categorie.js");
 
 let adminToken;
 let membreToken;
@@ -461,4 +461,5 @@ describe("Livre routes", () => {
     expect(res.statusCode).toBe(500);
   });
 });
+
 

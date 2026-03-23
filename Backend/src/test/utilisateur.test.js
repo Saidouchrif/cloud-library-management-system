@@ -1,9 +1,9 @@
-const request = require("supertest");
+﻿const request = require("supertest");
 
 process.env.JWT_SECRET = process.env.JWT_SECRET;
 process.env.JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET ;
 
-jest.mock("../Models/Utilisateur.js", () => {
+jest.mock("../models/utilisateur.js", () => {
   const bcrypt = require("bcryptjs");
 
   const users = [
@@ -190,3 +190,4 @@ describe("Utilisateur routes", () => {
     expect([200, 404]).toContain(res.statusCode);
   });
 });
+

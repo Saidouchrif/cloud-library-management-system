@@ -1,18 +1,63 @@
-# React + Vite
+# Cloud Library Management System - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend React (Vite) pour le système de gestion de bibliothèque Cloud Library. 
+Ce projet est connecté au Backend existant en Node.js/Express.
 
-Currently, two official plugins are available:
+## 🚀 Fonctionnalités Implémentées
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Authentication / Autorisation** : Connexion, Inscription, Refresh Tokens (Zustand + Axios Interceptors), Rôles (ADMIN, BIBLIOTHECAIRE, MEMBRE).
+- **Design System** : Tailwind CSS (via CDN) pour des interfaces modernes et responsives, Lucide Icons.
+- **Tableau de Bord** : Indicateurs clés (KPIs) en fonction du rôle.
+- **Gestion du Catalogue** : CRUD complet pour les catégories et les livres (réservé aux admins/bibliothécaires, lecture pour les membres).
+- **Emprunts** : Les membres peuvent emprunter des livres ; Les administrateurs peuvent valider le retour.
+- **Profil Utilisateur** : Mise à jour des infos personnelles et du mot de passe.
+- **Administration** : Gestion des utilisateurs (modification des rôles) réservée aux `ADMIN`.
 
-## React Compiler
+## 🛠️ Stack Technique
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- React 19 + Vite
+- React Router DOM v7 (Routing & Protected Routes)
+- Tailwind CSS (CDN paramétré dans `index.html`)
+- Zustand (Gestion d'état global + Persistance LocalStorage)
+- Axios (Appels API)
+- Lucide React (Icônes)
 
-Note: This will impact Vite dev & build performances.
+## 📦 Installation et Lancement
 
-## Expanding the ESLint configuration
+1. **Cloner ou ouvrir le projet** :
+   ```bash
+   cd Frontend
+   ```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+2. **Installer les dépendances** :
+   ```bash
+   npm install
+   ```
+
+3. **Variables d'environnement** :
+   Copiez `.env.example` en `.env` pour définir l'URL de l'API Backend :
+   ```bash
+   cp .env.example .env
+   ```
+   *Note : Par défaut, l'application pointe sur `http://localhost:5000/api` si la variable n'existe pas.*
+
+4. **Lancer le serveur de développement** :
+   ```bash
+   npm run dev
+   ```
+
+5. **Accéder à l'application** :  
+   Ouvrez [http://localhost:5173/](http://localhost:5173/) dans votre navigateur (ou l'URL indiquée par Vite).
+
+## 🧪 Tests fonctionnels (Rôles)
+
+Pour tester, assurez-vous que votre backend tourne sur le port 5000.  
+- Créez un compte "Nouveau" depuis la page d'inscription `/register` (Le backend donne le rôle `MEMBRE` par défaut).
+- Connectez-vous avec ce rôle, vous ne pourrez voir que "Vos emprunts" et le catalogue en lecture seule.
+- Utilisez un compte `ADMIN` (créé en BDD directement ou assigné via un script) pour modifier les rôles depuis le menu "Utilisateurs".
+
+## 🛡️ Gestion d'Erreurs
+
+- Les erreurs remontées par l'API Backend sont capturées (status 400, 401, 403, 404, 500).
+- Le `message` du backend est systématiquement affiché sur l'UI (Alertes, Toasts, ou sous le composant).
+- L'expiration du token d'accès (`accessToken`) déclenche automatiquement l'utilisation du `refreshToken` en tâche de fond pour une expérience fluide.
