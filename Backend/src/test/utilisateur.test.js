@@ -3,7 +3,7 @@ const request = require("supertest");
 process.env.JWT_SECRET = process.env.JWT_SECRET;
 process.env.JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET ;
 
-jest.mock("../models/utilisateur.js", () => {
+jest.mock("../Models/Utilisateur.js", () => {
   const bcrypt = require("bcryptjs");
 
   const users = [

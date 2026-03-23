@@ -7,12 +7,12 @@ const {
   getMesEmprunts,
   getAllEmprunts,
   getEmpruntById,
-} = require("../controllers/empruntController");
+} = require("../Controllers/empruntController");
 
 const { protect } = require("../middlewares/authMiddleware");
 const { authorizeRoles } = require("../middlewares/roleMiddleware");
 
-//  MEMBRE
+// MEMBRE
 router.post("/", protect, createEmprunt);
 router.get("/me", protect, getMesEmprunts);
 

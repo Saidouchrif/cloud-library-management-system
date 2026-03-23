@@ -8,12 +8,12 @@ const {
   updateCategorie,
   deleteCategorie,
   toggleCategorie,
-} = require("../controllers/categorieController");
+} = require("../Controllers/categorieController");
 
 const { protect } = require("../middlewares/authMiddleware");
 const { authorizeRoles } = require("../middlewares/roleMiddleware");
 
-// accessible Ã  tous les users connectÃ©s
+// accessible à tous les users connectés
 router.get("/", protect, getAllCategories);
 router.get("/:id", protect, getCategorieById);
 

@@ -8,7 +8,7 @@ const {
   updateLivre,
   deleteLivre,
   toggleLivre,
-} = require("../controllers/livreController.js");
+} = require("../Controllers/livreController.js");
 
 const { protect } = require("../middlewares/authMiddleware.js");
 const { authorizeRoles } = require("../middlewares/roleMiddleware.js");

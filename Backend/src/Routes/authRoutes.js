@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
+
 const {
   register,
   login,
   refreshToken,
-} = require("../controllers/authControllers.js");
+} = require("../Controllers/authControllers.js");
 
 router.post("/register", register);
 router.post("/login", login);

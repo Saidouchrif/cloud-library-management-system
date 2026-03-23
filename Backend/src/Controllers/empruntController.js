@@ -1,5 +1,5 @@
-const Emprunt = require("../models/emprunt.js");
-const Livre = require("../models/livre.js");
+const Emprunt = require("../Models/emprunt.js");
+const Livre = require("../Models/livre.js");
 
 //  Emprunter un livre
 exports.createEmprunt = async (req, res) => {

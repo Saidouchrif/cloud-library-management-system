@@ -4,7 +4,7 @@ process.env.JWT_SECRET = process.env.JWT_SECRET || "test-jwt-secret";
 process.env.JWT_REFRESH_SECRET =
   process.env.JWT_REFRESH_SECRET || "test-jwt-refresh-secret";
 
-jest.mock("../models/utilisateur.js", () => {
+jest.mock("../Models/Utilisateur.js", () => {
   const bcrypt = require("bcryptjs");
 
   const users = [
@@ -49,7 +49,7 @@ jest.mock("../models/utilisateur.js", () => {
   };
 });
 
-jest.mock("../models/categorie.js", () => {
+jest.mock("../Models/categorie.js", () => {
   const seed = [
     {
       _id: "cat1",
@@ -82,7 +82,7 @@ jest.mock("../models/categorie.js", () => {
   };
 });
 
-jest.mock("../models/livre.js", () => {
+jest.mock("../Models/livre.js", () => {
   const categories = [
     { _id: "cat1", nom: "Informatique", isActive: true },
     { _id: "cat2", nom: "Histoire", isActive: true },
@@ -231,8 +231,8 @@ jest.mock("../models/livre.js", () => {
 });
 
 const app = require("../app");
-const Livre = require("../models/livre.js");
-const Categorie = require("../models/categorie.js");
+const Livre = require("../Models/livre.js");
+const Categorie = require("../Models/categorie.js");
 
 let adminToken;
 let membreToken;

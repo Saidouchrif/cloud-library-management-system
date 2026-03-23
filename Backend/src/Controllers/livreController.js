@@ -1,5 +1,5 @@
-const Livre = require("../models/livre.js");
-const Categorie = require("../models/categorie.js");
+const Livre = require("../Models/livre.js");
+const Categorie = require("../Models/categorie.js");
 
 // CREATE
 exports.createLivre = async (req, res) => {

@@ -4,7 +4,7 @@ process.env.JWT_SECRET = process.env.JWT_SECRET || "test-jwt-secret";
 process.env.JWT_REFRESH_SECRET =
   process.env.JWT_REFRESH_SECRET || "test-jwt-refresh-secret";
 
-jest.mock("../models/utilisateur.js", () => {
+jest.mock("../Models/Utilisateur.js", () => {
   const bcrypt = require("bcryptjs");
 
   const seed = [
@@ -66,7 +66,7 @@ jest.mock("../models/utilisateur.js", () => {
   };
 });
 
-jest.mock("../models/livre.js", () => {
+jest.mock("../Models/livre.js", () => {
   const seed = [
     {
       _id: "l1",
@@ -150,7 +150,7 @@ jest.mock("../models/livre.js", () => {
   };
 });
 
-jest.mock("../models/emprunt.js", () => {
+jest.mock("../Models/emprunt.js", () => {
   const users = [
     { _id: "u1", nom: "Admin", email: "admin@mail.com", role: "ADMIN" },
     { _id: "u2", nom: "Membre", email: "membre@mail.com", role: "MEMBRE" },
@@ -333,9 +333,9 @@ jest.mock("../models/emprunt.js", () => {
 });
 
 const app = require("../app");
-const Emprunt = require("../models/emprunt.js");
-const Livre = require("../models/livre.js");
-const Utilisateur = require("../models/utilisateur.js");
+const Emprunt = require("../Models/emprunt.js");
+const Livre = require("../Models/livre.js");
+const Utilisateur = require("../Models/Utilisateur.js");
 
 let adminToken;
 let membreToken;
