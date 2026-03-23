@@ -13,22 +13,32 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 22
 
       - name: Install backend dependencies
         run: |
           cd Backend
-          npm install
+          npm ci
+
+      - name: Run backend tests
+        env:
+          JWT_SECRET: test-jwt-secret
+          JWT_REFRESH_SECRET: test-jwt-refresh-secret
+          JWT_EXPIRES_IN: 15m
+          JWT_REFRESH_EXPIRES_IN: 7d
+        run: |
+          cd Backend
+          npm test -- --runInBand
 
       - name: Install frontend dependencies
         run: |
           cd Frontend
-          npm install
+          npm ci
 
       - name: Build frontend
         run: |
