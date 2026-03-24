@@ -1,7 +1,8 @@
 ﻿const request = require("supertest");
 
-process.env.JWT_SECRET = process.env.JWT_SECRET;
-process.env.JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET ;
+process.env.JWT_SECRET = process.env.JWT_SECRET || "test-jwt-secret";
+process.env.JWT_REFRESH_SECRET =
+  process.env.JWT_REFRESH_SECRET || "test-jwt-refresh-secret";
 
 jest.mock("../models/utilisateur.js", () => {
   const bcrypt = require("bcryptjs");
@@ -14,6 +15,22 @@ jest.mock("../models/utilisateur.js", () => {
       motDePasse: bcrypt.hashSync("123456", 10),
       role: "ADMIN",
       isActive: true,
+    },
+    {
+      _id: "u2",
+      nom: "Membre",
+      email: "membre@mail.com",
+      motDePasse: bcrypt.hashSync("123456", 10),
+      role: "MEMBRE",
+      isActive: true,
+    },
+    {
+      _id: "u3",
+      nom: "Inactive",
+      email: "inactive@mail.com",
+      motDePasse: bcrypt.hashSync("123456", 10),
+      role: "MEMBRE",
+      isActive: false,
     },
   ];
 
@@ -100,6 +117,7 @@ jest.mock("../models/utilisateur.js", () => {
 });
 
 const app = require("../app");
+const { generateAccessToken } = require("../utils/jwt.js");
 
 let token;
 let userId;
@@ -111,6 +129,27 @@ beforeAll(async () => {
   });
 
   token = res.body?.data?.accessToken;
+});
+
+describe("Auth guards", () => {
+  it("POST /api/auth/login -> 403 si compte desactive", async () => {
+    const res = await request(app).post("/api/auth/login").send({
+      email: "inactive@mail.com",
+      motDePasse: "123456",
+    });
+
+    expect(res.statusCode).toBe(403);
+  });
+
+  it("GET /api/utilisateurs/profile -> 403 si token utilisateur desactive", async () => {
+    const inactiveToken = generateAccessToken("u3", "MEMBRE");
+
+    const res = await request(app)
+      .get("/api/utilisateurs/profile")
+      .set("Authorization", `Bearer ${inactiveToken}`);
+
+    expect(res.statusCode).toBe(403);
+  });
 });
 
 describe("Utilisateur routes", () => {
@@ -152,7 +191,10 @@ describe("Utilisateur routes", () => {
       .set("Authorization", `Bearer ${token}`);
 
     expect(res.statusCode).toBe(200);
-    userId = res.body?.data?.[0]?._id || res.body?.[0]?._id;
+    const liste = res.body?.data || res.body || [];
+    const cible = liste.find((item) => item._id !== "u1");
+    userId = cible?._id;
+    expect(userId).toBeTruthy();
   });
 
   it("GET /api/utilisateurs/:id", async () => {

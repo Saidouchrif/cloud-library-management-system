@@ -49,6 +49,9 @@ exports.login = async (req, res) => {
         if (!user)
             return res.status(404).json({ message: "Utilisateur introuvable" });
 
+        if (!user.isActive)
+            return res.status(403).json({ message: "Compte désactivé" });
+
         const match = await bcrypt.compare(motDePasse, user.motDePasse);
         if (!match)
             return res.status(401).json({ message: "Mot de passe incorrect" });

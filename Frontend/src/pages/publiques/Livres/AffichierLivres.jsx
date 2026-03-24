@@ -12,25 +12,34 @@ export default function AffichierLivres() {
   const { utilisateur } = useAuthentification();
 
   useEffect(() => {
-    fetchLivres();
-  }, []);
+    let actif = true;
 
-  const fetchLivres = async () => {
-    try {
-      setEtat('chargement');
-      const donnees = await listerLivresPublic();
-      setLivres(donnees.data);
-      setEtat('succes');
-    } catch (erreur) {
-      console.error('Erreur lors du chargement des livres:', erreur);
-      setEtat('erreur');
-    }
-  };
+    const chargerLivres = async () => {
+      try {
+        const donnees = await listerLivresPublic();
+        if (!actif) return;
+        setLivres(donnees.data);
+        setEtat('succes');
+      } catch (erreur) {
+        console.error('Erreur lors du chargement des livres:', erreur);
+        if (!actif) return;
+        setEtat('erreur');
+      }
+    };
+
+    chargerLivres();
+
+    return () => {
+      actif = false;
+    };
+  }, []);
 
   const handleEmprunter = (idLivre) => {
     if (!utilisateur) {
       // Redirection vers connexion si non connecté
-      navigate('/connexion', { state: { de: `/livres/${idLivre}/emprunter` } });
+      navigate('/connexion', {
+        state: { from: { pathname: `/livres/${idLivre}/emprunter` } },
+      });
     } else {
       // Redirection vers la page d'emprunt
       navigate(`/livres/${idLivre}/emprunter`);
