@@ -1,6 +1,20 @@
 const Livre = require("../models/livre.js");
 const Categorie = require("../models/categorie.js");
 
+// build search query for GET /livres and GET /livres/visiteur
+const buildSearchQuery = (search, onlyActive = false) => {
+  const query = onlyActive ? { isActive: true } : {};
+
+  if (search) {
+    query.$or = [
+      { titre: { $regex: search, $options: "i" } },
+      { auteur: { $regex: search, $options: "i" } },
+    ];
+  }
+
+  return query;
+};
+
 // CREATE
 exports.createLivre = async (req, res) => {
   try {
@@ -36,17 +50,24 @@ exports.createLivre = async (req, res) => {
 exports.getLivres = async (req, res) => {
   try {
     const { search } = req.query;
+    const query = buildSearchQuery(search);
 
-    let query = {};
+    const livres = await Livre.find(query).populate("categorie");
 
-    if (search) {
-      query = {
-        $or: [
-          { titre: { $regex: search, $options: "i" } },
-          { auteur: { $regex: search, $options: "i" } },
-        ],
-      };
-    }
+    res.json({
+      count: livres.length,
+      data: livres,
+    });
+  } catch {
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+};
+
+// GET ALL + SEARCH (PUBLIC VISITOR)
+exports.getLivresVisiteur = async (req, res) => {
+  try {
+    const { search } = req.query;
+    const query = buildSearchQuery(search, true);
 
     const livres = await Livre.find(query).populate("categorie");
 

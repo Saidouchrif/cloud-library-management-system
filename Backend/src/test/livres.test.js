@@ -260,6 +260,22 @@ beforeEach(() => {
 });
 
 describe("Livre routes", () => {
+  it("GET /api/livres/public -> 200 sans token", async () => {
+    const res = await request(app).get("/api/livres/public");
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body.count).toBe(2);
+    expect(Array.isArray(res.body.data)).toBe(true);
+  });
+
+  it("GET /api/livres/public?search=clean -> 200 sans token", async () => {
+    const res = await request(app).get("/api/livres/public?search=clean");
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body.count).toBe(1);
+    expect(res.body.data[0].titre).toBe("Clean Code");
+  });
+
   it("GET /api/livres -> 401 sans token", async () => {
     const res = await request(app).get("/api/livres");
 

@@ -4,6 +4,7 @@ const router = express.Router();
 const {
   createLivre,
   getLivres,
+  getLivresVisiteur,
   getLivreById,
   updateLivre,
   deleteLivre,
@@ -12,6 +13,9 @@ const {
 
 const { protect } = require("../middlewares/authMiddleware.js");
 const { authorizeRoles } = require("../middlewares/roleMiddleware.js");
+
+// PUBLIC (visiteur)
+router.get("/public", getLivresVisiteur);
 
 // GET
 router.get("/", protect, getLivres);
