@@ -73,6 +73,7 @@ Regles middleware:
 | PUT | `/api/categories/:id` | Oui | 200 | 200 | 403 |
 | DELETE | `/api/categories/:id` | Oui | 200 | 200 | 403 |
 | PATCH | `/api/categories/:id/toggle` | Oui | 200 | 200 | 403 |
+| GET | `/api/livres/public` | Non | 200 | 200 | 200 |
 | GET | `/api/livres` | Oui | 200 | 200 | 200 |
 | GET | `/api/livres/:id` | Oui | 200 | 200 | 200 |
 | POST | `/api/livres` | Oui | 201 | 201 | 403 |
@@ -393,6 +394,36 @@ ou
 
 ## 9) Livres - Routes detaillees
 
+### GET `/api/livres/public` (VISITEUR / PUBLIC)
+Option recherche:
+- `/api/livres/public?search=clean`
+
+Succes `200`:
+```json
+{
+  "count": 1,
+  "data": [
+    {
+      "_id": "LIVRE_ID",
+      "titre": "Clean Code",
+      "auteur": "Robert C. Martin",
+      "isbn": "ISBN-001",
+      "categorie": {
+        "_id": "CAT_ID",
+        "nom": "Informatique"
+      },
+      "quantite": 5,
+      "exemplairesDisponibles": 5,
+      "isActive": true
+    }
+  ]
+}
+```
+
+Fonction backend utilisee:
+- `getLivresVisiteur` (dans `src/controllers/livreController.js`)
+- Cette fonction retourne la liste des livres actifs (`isActive: true`), avec filtre de recherche optionnel sur `titre` ou `auteur`, puis `populate("categorie")`.
+
 ### GET `/api/livres`
 Option recherche:
 - `/api/livres?search=clean`
@@ -636,6 +667,7 @@ Ce bloc peut etre utilise comme base pour tests Postman/Frontend QA.
   { "route": "DELETE /api/categories/:id", "statusByRole": { "ADMIN": 200, "BIBLIOTHECAIRE": 200, "MEMBRE": 403, "SANS_TOKEN": 401 } },
   { "route": "PATCH /api/categories/:id/toggle", "statusByRole": { "ADMIN": 200, "BIBLIOTHECAIRE": 200, "MEMBRE": 403, "SANS_TOKEN": 401 } },
 
+  { "route": "GET /api/livres/public", "statusByRole": { "PUBLIC": 200, "ADMIN": 200, "BIBLIOTHECAIRE": 200, "MEMBRE": 200, "SANS_TOKEN": 200 } },
   { "route": "GET /api/livres", "statusByRole": { "ADMIN": 200, "BIBLIOTHECAIRE": 200, "MEMBRE": 200, "SANS_TOKEN": 401 } },
   { "route": "GET /api/livres/:id", "statusByRole": { "ADMIN": 200, "BIBLIOTHECAIRE": 200, "MEMBRE": 200, "SANS_TOKEN": 401 } },
   { "route": "POST /api/livres", "statusByRole": { "ADMIN": 201, "BIBLIOTHECAIRE": 201, "MEMBRE": 403, "SANS_TOKEN": 401 } },

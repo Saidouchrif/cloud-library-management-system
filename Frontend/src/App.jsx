@@ -28,7 +28,7 @@ import ListeEmprunts from './pages/privees/emprunts/ListeEmprunts';
 import DetailEmprunt from './pages/privees/emprunts/DetailEmprunt';
 import RetourEmprunt from './pages/privees/emprunts/RetourEmprunt';
 
-import PageIntrouvable from './pages/PageIntrouvable';
+import PageIntrouvable from './pages/publiques/NotFound/PageIntrouvable';
 
 export default function App() {
   return (
