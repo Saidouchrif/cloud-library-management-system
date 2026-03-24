@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import AlerteMessage from '../../composants/commun/AlerteMessage';
-import BoutonAction from '../../composants/commun/BoutonAction';
-import ChampFormulaire from '../../composants/commun/ChampFormulaire';
-import { inscrireUtilisateur } from '../../api/services/serviceAuth';
-import { extraireMessageErreur } from '../../api/extraireMessageErreur';
+import AlerteMessage from '../../../composants/commun/AlerteMessage';
+import BoutonAction from '../../../composants/commun/BoutonAction';
+import ChampFormulaire from '../../../composants/commun/ChampFormulaire';
+import { inscrireUtilisateur } from '../../../api/services/serviceAuth';
+import { extraireMessageErreur } from '../../../api/extraireMessageErreur';
+import useAuthentification from '../../../magasin/authentification';
 
 export default function Inscription() {
   const [formulaire, setFormulaire] = useState({
@@ -16,6 +17,13 @@ export default function Inscription() {
   const [erreur, setErreur] = useState('');
   const [succes, setSucces] = useState('');
   const navigate = useNavigate();
+  const { utilisateur } = useAuthentification();
+
+  useEffect(() => {
+    if (utilisateur) {
+      navigate('/tableau-de-bord', { replace: true });
+    }
+  }, [utilisateur, navigate]);
 
   const gererSoumission = async (event) => {
     event.preventDefault();

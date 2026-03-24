@@ -2,11 +2,12 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import RouteProtegee from './composants/securite/RouteProtegee';
 import MiseEnPagePrivee from './composants/navigation/MiseEnPagePrivee';
 
-import Accueil from './pages/publiques/Accueil';
-import APropos from './pages/publiques/APropos';
-import Support from './pages/publiques/Support';
-import Connexion from './pages/publiques/Connexion';
-import Inscription from './pages/publiques/Inscription';
+import Accueil from './pages/publiques/Home/Accueil';
+import APropos from './pages/publiques/About/APropos';
+import Support from './pages/publiques/Contact/Support';
+import Connexion from './pages/publiques/Auth/Connexion';
+import Inscription from './pages/publiques/Auth/Inscription';
+import AffichierLivres from './pages/publiques/Livres/AffichierLivres';
 
 import TableauDeBord from './pages/privees/TableauDeBord';
 import ProfilUtilisateur from './pages/privees/profil/ProfilUtilisateur';
@@ -39,6 +40,7 @@ export default function App() {
         <Route path="/support" element={<Support />} />
         <Route path="/connexion" element={<Connexion />} />
         <Route path="/inscription" element={<Inscription />} />
+        <Route path="/nos-livres" element={<AffichierLivres />} />
 
         <Route
           element={

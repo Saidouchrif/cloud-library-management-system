@@ -1,21 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import AlerteMessage from '../../composants/commun/AlerteMessage';
-import BoutonAction from '../../composants/commun/BoutonAction';
-import ChampFormulaire from '../../composants/commun/ChampFormulaire';
-import { connecterUtilisateur } from '../../api/services/serviceAuth';
-import { extraireMessageErreur } from '../../api/extraireMessageErreur';
-import useAuthentification from '../../magasin/authentification';
+import AlerteMessage from '../../../composants/commun/AlerteMessage';
+import BoutonAction from '../../../composants/commun/BoutonAction';
+import ChampFormulaire from '../../../composants/commun/ChampFormulaire';
+import { connecterUtilisateur } from '../../../api/services/serviceAuth';
+import { extraireMessageErreur } from '../../../api/extraireMessageErreur';
+import useAuthentification from '../../../magasin/authentification';
 
 export default function Connexion() {
   const [formulaire, setFormulaire] = useState({ email: '', motDePasse: '' });
   const [chargement, setChargement] = useState(false);
   const [erreur, setErreur] = useState('');
-  const { setSession } = useAuthentification();
+  const { utilisateur, setSession } = useAuthentification();
   const navigate = useNavigate();
   const location = useLocation();
 
   const destination = location.state?.from?.pathname || '/tableau-de-bord';
+
+  useEffect(() => {
+    if (utilisateur) {
+      navigate('/tableau-de-bord', { replace: true });
+    }
+  }, [utilisateur, navigate]);
 
   const gererSoumission = async (event) => {
     event.preventDefault();

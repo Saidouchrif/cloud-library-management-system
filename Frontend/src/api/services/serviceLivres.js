@@ -6,6 +6,11 @@ export const listerLivres = async (search = '') => {
   return reponse.data;
 };
 
+export const listerLivresPublic = async () => {
+  const reponse = await clientHttp.get('/livres/public');
+  return reponse.data;
+};
+
 export const recupererLivreParId = async (id) => {
   const reponse = await clientHttp.get(`/livres/${id}`);
   return reponse.data;
